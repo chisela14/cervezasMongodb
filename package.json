@@ -1,0 +1,30 @@
+{
+  "name": "cervezasmongodb",
+  "version": "1.0.0",
+  "description": "Servidor express con conexión a base de datos mongodb en la nube",
+  "main": "app.js",
+  "scripts": {
+    "start:dev": "DEBUG=app:* nodemon app.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./data/*"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chisela14/cervezasMongodb.git"
+  },
+  "author": "chisela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chisela14/cervezasMongodb/issues"
+  },
+  "homepage": "https://github.com/chisela14/cervezasMongodb#readme",
+  "dependencies": {
+    "diskdb": "^0.1.17",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.7.0"
+  }
+}
