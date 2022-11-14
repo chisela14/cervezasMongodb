@@ -10,7 +10,6 @@ const CervezaSchema = new Schema({
     Descripción: {
         type: String,
         required: [true, 'La descripción es obligatoria'],
-        
     },
     Graduación: {
         type: String,

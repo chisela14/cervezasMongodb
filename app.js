@@ -16,4 +16,7 @@ app.use(express.json())
 const cervezas = require('./routes/cervezas')
 app.use('/cervezas', cervezas)
 
+const users = require('./routes/users')
+app.use('/users', users)
+
 app.listen(process.env.PORT)

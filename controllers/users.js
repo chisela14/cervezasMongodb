@@ -1,9 +1,11 @@
 const { response, request } = require('express');
 const User = require('../models/user');
+const bcryptjs = require('bcryptjs');
+const { validationResult } = require('express-validator');
 
 async function getUsers(req, res) {
-    const {Nombre, Apellidos, Username, Email, Contraseña} = req.query
-    const query = {Nombre, Apellidos, Username, Email, Contraseña}
+    const {Nombre, Apellidos, Username, Email, Contraseña, Rol} = req.query
+    const query = {Nombre, Apellidos, Username, Email, Contraseña, Rol}
     for (const key in query) {
         if (query[key] === undefined) {
           delete query[key];
@@ -24,8 +26,16 @@ async function getUser(req =request, res = response) {
 }
 
 async function addUser(req = request, res = response) {
-    const { Nombre, Apellidos, Username, Email, Contraseña} = req.body;
-    const user = new Users({ Nombre, Apellidos, Username, Email, Contraseña});
+    // const errors = validationResult(req);
+    // if(!errors.isEmpty()){
+    //     return res.status(400).json(errors);
+    // }
+    const { Nombre, Apellidos, Username, Email, Contraseña, Rol} = req.body;
+    const user = new User({ Nombre, Apellidos, Username, Email, Contraseña, Rol});
+    //encriptar contraseña
+    const salt = bcryptjs.genSaltSync();
+    user.Contraseña = bcryptjs.hashSync(Contraseña, salt);
+    
     await user.save();
     res.json({user});
 }

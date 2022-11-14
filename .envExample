@@ -1,0 +1,2 @@
+PORT=8080
+MONGODB_CNN=mongodb+srv://mongo:<password>@cluster0.etmrabw.mongodb.net/beers

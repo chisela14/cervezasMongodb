@@ -15,6 +15,7 @@ const UserSchema = new Schema({
     Username: {
         type: String,
         required: [true, 'El nombre de usuario es obligatorio'],
+        unique: true,
     },
     Email: {
         type: String,
@@ -24,6 +25,11 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'La contraseña es obligatoria'],
     },
+    Rol: { //crear rol schema
+        type: String,
+        required: true,
+        enum: ['ADMIN_ROLE', 'USER_ROLE'],
+    }
 });
 
 const User = mongoose.model('User', UserSchema);
