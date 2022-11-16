@@ -1,15 +1,17 @@
 const Rol = require('../models/rol')
+const User = require('../models/user')
+const Cerveza = require('../models/cerveza')
 
 const isValidRol = async (rol = '')=> {
 	const existeRol = await Rol.findOne({ rol })
-		  if (!existeRol) {
-			  throw new Error(`Rol ${rol} not exists in database`)
-		  }
+    if (!existeRol) {
+        throw new Error(`Rol ${rol} not exists in database`)
+    }
 }
-const isEmail = async(email = '')=> {
-    const emailExist = await User.findOne({email}); 
-    if(emailExist){
-        throw new Error(`Email ${email} not exists in database`)
+const emailExist = async(Email)=> {
+    const emailDb = await User.findOne({ Email }); 
+    if(emailDb){
+        throw new Error(`Email ${Email} already exists in database`)
         // return res.status(400).json({
         //     "msg": "El email ya está registrado"
         // })
@@ -17,4 +19,4 @@ const isEmail = async(email = '')=> {
 }
 
 
-module.exports = {isValidRol, isEmail}
+module.exports = {isValidRol, emailExist}

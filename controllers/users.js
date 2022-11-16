@@ -3,15 +3,15 @@ const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 
-async function getUsers(req, res) {
-    const {Nombre, Apellidos, Username, Email, Contraseña, Rol} = req.query
-    const query = {Nombre, Apellidos, Username, Email, Contraseña, Rol}
+async function getUsers(req = request, res = response) {
+    const {Nombre, Apellidos, Username, Email, Contraseña, Rol, limit=5, skip=0} = req.query
+    const query = {Nombre, Apellidos, Username, Email, Contraseña, Rol, limit, skip}
     for (const key in query) {
         if (query[key] === undefined) {
           delete query[key];
         }
       }
-    const users = await User.find(query)
+    const users = await User.find(query).limit(limit).skip(skip);
     res.json(users)
 }
 
