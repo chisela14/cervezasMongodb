@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
-    Nombre: {
+    Nombre: { //nombres en minúscula
         type: String,
         required: [true, 'El nombre es obligatorio'],
         unique: true
@@ -25,10 +25,13 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'La contraseña es obligatoria'],
     },
-    Rol: { //crear rol schema
+    Rol: { 
         type: String,
         required: true,
         enum: ['ADMIN_ROLE', 'USER_ROLE'],
+    },
+    State: {
+        //TO DO
     }
 });
 

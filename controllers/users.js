@@ -40,10 +40,10 @@ async function addUser(req = request, res = response) {
     res.json({user});
 }
 
-async function deleteUser(req, res){
-    const userId = req.params.id;
-    const removed = await User.findByIdAndDelete(userId);
-    res.json(removed);
+async function deleteUser(req = request, res = response) {
+    const id = req.params.id;
+    const user = await User.findByIdAndDelete(id); //findByIdAndUpdate(id, {"status": false})
+    res.json(user);
 }
 
 async function modifyUser(req = request, res = response) {
@@ -53,4 +53,4 @@ async function modifyUser(req = request, res = response) {
     res.json(updatedUser);
 }
 
-module.exports = { getUsers, getUser, addUser, deleteUser, modifyUser, }
+module.exports = { getUsers, getUser, addUser, deleteUser, modifyUser}
