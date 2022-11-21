@@ -21,9 +21,16 @@ router.delete('/:id', [
     check('id').custom(userExists),
     validateFields
 ], deleteUser);
-//TO DO
+//Debe introducir todos los campos porque sino se quedarán vacíos
 router.put('/:id',[
     check('id', 'No es un id válido').isMongoId(),
+    check('Nombre', 'El nombre no puede quedar vacío').not().isEmpty(),
+    check('Apellidos', 'Los apellidos no pueden quedar vacíos').not().isEmpty(),
+    check('Username', 'El nombre de usuario no puede quedar vacío').not().isEmpty(),
+    check('Email', 'El email no puede quedar vacío').not().isEmpty(),
+    check('Email', 'El email no es válido').isEmail(), 
+    check('Email').custom(emailExists), 
+    check('Contraseña', 'La contraseña no puede quedar vacía').not().isEmpty(),
     validateFields
 ], modifyUser)
 
