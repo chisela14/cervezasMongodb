@@ -24,6 +24,7 @@ router.delete('/:id', [
 //Debe introducir todos los campos porque sino se quedarán vacíos
 router.put('/:id',[
     check('id', 'No es un id válido').isMongoId(),
+    check('id').custom(userExists),
     check('Nombre', 'El nombre no puede quedar vacío').not().isEmpty(),
     check('Apellidos', 'Los apellidos no pueden quedar vacíos').not().isEmpty(),
     check('Username', 'El nombre de usuario no puede quedar vacío').not().isEmpty(),
@@ -31,6 +32,7 @@ router.put('/:id',[
     check('Email', 'El email no es válido').isEmail(), 
     check('Email').custom(emailExists), 
     check('Contraseña', 'La contraseña no puede quedar vacía').not().isEmpty(),
+    check('Contraseña', 'El password debe de ser más de 6 letras').isLength({ min: 6, max: 12 }),
     validateFields
 ], modifyUser)
 

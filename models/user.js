@@ -30,7 +30,7 @@ const UserSchema = new Schema({
         required: true,
         enum: ['ADMIN_ROLE', 'USER_ROLE'],
     },
-    State: {
+    Status: {
         //TO DO
     }
 });

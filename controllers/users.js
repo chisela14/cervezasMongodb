@@ -42,15 +42,21 @@ async function addUser(req = request, res = response) {
 
 async function deleteUser(req = request, res = response) {
     const id = req.params.id;
-    const user = await User.findByIdAndDelete(id); //findByIdAndUpdate(id, {"status": false})
+    const user = await User.findByIdAndDelete(id); //findByIdAndUpdate(id, {"Status": false})
     res.json(user);
 }
 
 async function modifyUser(req = request, res = response) {
-    const userId = req.params.id;
-    const user = req.body;
-    const updatedUser =  await User.findByIdAndUpdate(userId, user);
+    const {id} = req.params;
+    //no se va a permitir que se modifique el email
+    const {_id, Email, Status, ...userBody} = req.body; //... operador splice, permite que con el resto que quede se crea una variable(userBody)
+
+    const salt = bcryptjs.genSaltSync();
+    userBody.password = bcryptjs.hashSync( userBody.password, salt );
+    const updatedUser =  await User.findByIdAndUpdate(id, userBody);
+
     res.json(updatedUser);
+   
 }
 
 module.exports = { getUsers, getUser, addUser, deleteUser, modifyUser}
