@@ -19,4 +19,7 @@ app.use('/cervezas', cervezas)
 const users = require('./routes/users')
 app.use('/users', users)
 
+const login = require('./routes/login')
+app.use('/auth/login', login)
+
 app.listen(process.env.PORT)

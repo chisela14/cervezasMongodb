@@ -31,7 +31,9 @@ const UserSchema = new Schema({
         enum: ['ADMIN_ROLE', 'USER_ROLE'],
     },
     Status: {
-        //TO DO
+        type: String,
+        required: true,
+        enum: ['active', 'inactive']
     }
 });
 

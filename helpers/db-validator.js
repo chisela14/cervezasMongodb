@@ -3,10 +3,10 @@ const User = require('../models/user')
 const Cerveza = require('../models/cerveza')
 
 //USERS
-const isValidRol = async (rol = '')=> {
-	const existeRol = await Rol.findOne({ rol })
+const isValidRol = async (Rol = '')=> {
+	const existeRol = await Rol.findOne({ Rol })
     if (!existeRol) {
-        throw new Error(`Rol ${rol} not exists in database`)
+        throw new Error(`Rol ${Rol} not exists in database`)
     }
 }
 const emailExists = async(Email)=> {
