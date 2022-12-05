@@ -5,6 +5,6 @@ const validateFields = function(req, res, next){
     if(!errors.isEmpty()){
         return res.status(400).json(errors);
     }
-    next()
+    next() //hay que ponerlo para que pase al siguiente en caso de que no falle
 }
 module.exports = {validateFields};
