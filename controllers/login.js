@@ -3,23 +3,43 @@ const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 
 async function checkLogin(req = request, res = response) {
-    const Contraseña = req.params.Contraseña
-    //comprobar contraseña
-    const salt = bcryptjs.genSaltSync();
-    encriptada = bcryptjs.hashSync(Contraseña, salt);
-    if(bcryptjs.compareSync(Contraseña, encriptada)){
-        //comprobar email existe
-        const Email = req.params.Email
-        const userDb = await User.findOne({Email});
-        if(!userDb){
-            res.json({ message: `El correo no existe` })
-        }else{
-            if(userDb.Status == "inactive"){
-               res.json({ message: `El usuario no está activo` }) 
-            }
+    const { Email, Contraseña} = req.body;
+    try{
+
+        //verificar que el email existe
+        const user = await User.findOne({Email})
+        if(!user){
+            return res.status(401).json({
+                msg: 'User/password incorrect - email'
+            })
         }
-    }else{
-        res.json({ message: `La contraseña no es correcta` })
+        //verificar que el usuario está activo
+        if( !user.Status){
+            return res.status(401).json({
+                msg: 'User/password incorrect - inactive'
+            })
+        }
+    
+        //verificar que la constraseña es correcta
+        const validPassword = bcryptjs.compareSync(Contraseña, user.Contraseña) 
+        if(!validPassword){
+            return res.status(401).json({
+                msg: 'User/password incorrect - password'
+            })
+        }
+
+        //Generamos el jwt
+        const token = await genJWT(user._id);
+        res.json({
+            user,
+            token
+        }        
+        )
+    } catch (error){
+        console.log(error)
+        res.status(500).json({
+            msg: 'Error en el servidor consulte con el administrador'
+        })
     }
 }
 

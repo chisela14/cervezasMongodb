@@ -3,69 +3,54 @@
     "Apellidos": "Malin",
     "Username": "gmalin0",
     "Email": "gmalin0@wix.com",
-    "Contraseña": "TwxTw70ErivM"
+    "Contraseña": "TwxTw70ErivM",
+    "Rol": "ADMIN_ROLE",
+    "Status": true
   }, 
   {
     "Nombre": "Shane",
     "Apellidos": "Chadwin",
     "Username": "schadwin1",
     "Email": "schadwin1@nba.com",
-    "Contraseña": "e8ia4ez"
+    "Contraseña": "e8ia4ez",
+    "Rol": "ADMIN_ROLE",
+    "Status": true
   }, 
   {
     "Nombre": "Donella",
     "Apellidos": "Benzies",
     "Username": "dbenzies2",
     "Email": "dbenzies2@bing.com",
-    "Contraseña": "m5IJC5ybymX"
+    "Contraseña": "m5IJC5ybymX",
+    "Rol": "ADMIN_ROLE",
+    "Status": true
   }, 
   {
     "Nombre": "Mickie",
     "Apellidos": "MacDaid",
     "Username": "mmacdaid3",
     "Email": "mmacdaid3@spiegel.de",
-    "Contraseña": "zYZbQm00OOS"
+    "Contraseña": "zYZbQm00OOS",
+    "Rol": "USER_ROLE",
+    "Status": false
   }, 
   {
     "Nombre": "Kean",
     "Apellidos": "Dutteridge",
     "Username": "kdutteridge4",
     "Email": "kdutteridge4@bloglines.com",
-    "Contraseña": "X999Y179JsC"
+    "Contraseña": "X999Y179JsC",
+    "Rol": "USER_ROLE",
+    "Status": false
   }, 
   {
     "Nombre": "Huntlee",
     "Apellidos": "Zink",
     "Username": "hzink5",
     "Email": "hzink5@furl.net",
-    "Contraseña": "ZujRE8LXf"
-  }, 
-  {
-    "Nombre": "Wade",
-    "Apellidos": "Ashworth",
-    "Username": "washworth6",
-    "Email": "washworth6@etsy.com",
-    "Contraseña": "k3ZgSOu"
-  }, 
-  {
-    "Nombre": "Alisa",
-    "Apellidos": "Stainson",
-    "Username": "astainson7",
-    "Email": "astainson7@jiathis.com",
-    "Contraseña": "WW6wBv8z6w"
-  }, 
-  {
-    "Nombre": "Clemmie",
-    "Apellidos": "Vazquez",
-    "Username": "cvazquez8",
-    "Email": "cvazquez8@webnode.com",
-    "Contraseña": "cFdqQ60LvJH3"
-  },
-  {
-    "Nombre": "Ferdie",
-    "Apellidos": "Duetsche",
-    "Username": "fduetsche9",
-    "Email": "fduetsche9@thetimes.co.uk",
-    "Contraseña": "OpwdeKsL"
-  }]
+    "Contraseña": "ZujRE8LXf",
+    "Rol": "USER_ROLE",
+    "Status": false
+  }
+]
   

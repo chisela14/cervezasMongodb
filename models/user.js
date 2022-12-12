@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-const Schema = mongoose.Schema
+const { Schema, model} = require('mongoose');
 
 const UserSchema = new Schema({
     Nombre: { //nombres en minúscula
@@ -31,11 +30,15 @@ const UserSchema = new Schema({
         enum: ['ADMIN_ROLE', 'USER_ROLE'],
     },
     Status: {
-        type: String,
-        required: true,
-        enum: ['active', 'inactive']
+        type: Boolean, 
+        default: true
     }
 });
 
-const User = mongoose.model('User', UserSchema);
-module.exports = User;
+UserSchema.methods.toJSON = function(){
+    const {__v, Contraseña, _id, ...user} = this.toObject();
+    user.uid = _id;
+    return user;
+}
+
+module.exports = model('User', UserSchema);

@@ -4,9 +4,13 @@ const{getUsers, getUser, addUser, deleteUser, modifyUser}=require('../controller
 const{check} = require('express-validator');
 const{validateFields} = require("../helpers/validate-fields");
 const {isValidRol, emailExists, userExists} = require('../helpers/db-validator');
+const { validateJWT } = require('../middleware/validate-jwt.js');
+const { isAdminRol, hasRol } = require('../middleware/validate-rol.js');
+
 
 router.get('/', getUsers);
 router.get('/', getUser);
+
 router.post('/', [
     check('Email', 'El email no es válido').isEmail(), 
     check('Email').custom(emailExists), 
@@ -16,11 +20,16 @@ router.post('/', [
     check('Rol').custom(isValidRol),
     validateFields
     ],addUser);
+
 router.delete('/:id', [
+    validateJWT,
+    //isAdminRol,
+    hasRol("ADMIN_ROLE", "DELETE_ROLE"),
     check('id', 'No es un id válido').isMongoId(),
     check('id').custom(userExists),
     validateFields
 ], deleteUser);
+
 //Debe introducir todos los campos porque sino se quedarán vacíos
 router.put('/:id',[
     check('id', 'No es un id válido').isMongoId(),
