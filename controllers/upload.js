@@ -4,49 +4,27 @@ const { v4: uuidv4 } = require('uuid');
 
 const uploadFile = (req = request, res = response) => {
 
-    // if (!req.files) {
-    //     res.send({
-    //         status: false,
-    //         message: 'No file uploaded'
-    //     });
-    // }else{
-    //     // Recoger el archivo con el nombre del input (se le dará el nombre de "ejemplo")
-    //     let file = req.files.ejemplo;
-        
-    //     // Mover el archivo al directorio indicado
-    //     file.mv('./files/' + ejemplo.name);
-
-    //     //Enviar respuesta
-    //     res.send({
-    //         status: true,
-    //         message: 'File is uploaded',
-    //         data: {
-    //             name: ejemplo.name,
-    //             size: ejemplo.size
-    //         }
-    //     });
-    // }
-    let sampleFile;
-    let uploadPath;
-
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).json({msg:'No files were uploaded.'});
     }
 
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    sampleFile = req.files.sampleFile;
-    extension = path.extname(sampleFile.name)//devuelve extensión con punto
-    //splitName
-    uuidv4();
+    // The name of the input field (i.e. "file") is used to retrieve the uploaded file
+    const {file} = req.files;
+    extension = path.extname(file.name)//devuelve extensión con punto
+    //splitName = file.name.split('.')
+    //extension = splitName[splitName - 1] //extensión sin punto
+    //extension = file.name.split('.').pop() //sin punto en una línea
 
-    uploadPath = path.join(__dirname,'../uploads', sampleFile.name);
+    const fileName = uuidv4()+extension;
+
+    uploadPath = path.join(__dirname,'../uploads', fileName);
 
     // Use the mv() method to place the file somewhere on your server
-    sampleFile.mv(uploadPath, function(err) {
+    file.mv(uploadPath, function(err) {
         if (err)
         return res.status(500).json({err});
 
-        res.json({msg:'File uploaded!'});
+        res.json({msg:`File uploaded with extension ${extension} to ${uploadPath}`});
     });
 }
 
