@@ -1,9 +1,9 @@
 const { response, request } = require('express');
 const Bar = require('../models/bar');
 
-async function getBar(req, res) {
-    const {Nombre, Dirección} = req.query
-    const query = {Nombre, Dirección}
+async function getBares(req, res) {
+    const {name, address} = req.query
+    const query = {name, address}
     for (const key in query) {
         if (query[key] === undefined) {
           delete query[key];
@@ -24,8 +24,8 @@ async function getBar(req = request, res = response) {
 }
 
 async function addBar(req = request, res = response) {
-    const {Nombre, Dirección} = req.body;
-    const bar = new Bar({ Nombre, Dirección});
+    const {name, address} = req.body;
+    const bar = new Bar({ name, address});
     await bar.save();
     res.json({bar});
 }
@@ -43,4 +43,4 @@ async function modifyBar(req = request, res = response) {
     res.json(updatedBar);
 }
 
-module.exports = { getBar ,getBar, addBar, deleteBar, modifyBar }
+module.exports = { getBares, getBar, addBar, deleteBar, modifyBar }

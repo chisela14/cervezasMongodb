@@ -12,7 +12,11 @@ connectAtlas()
 
 //MIDDLEWARE
 app.use(express.json())
-app.use(fileUpload())
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: '/tmp/',
+    createParentPath: true
+}))
 //ROUTES
 const cervezas = require('./routes/cervezas')
 app.use('/cervezas', cervezas)

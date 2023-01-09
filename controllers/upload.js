@@ -1,31 +1,59 @@
 const {request, response} = require('express')
-const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const { upload } = require('../helpers/uploadFile');
+const Bar = require('../models/bar');
+const User = require('../models/user');
+const Cerveza = require('../models/cerveza');
 
-const uploadFile = (req = request, res = response) => {
+const uploadFile = async(req = request, res = response) => {
 
+    //comprobar que se ha subido un archivo
     if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).json({msg:'No files were uploaded.'});
+        res.status(400).send('No files were uploaded.');
+        return;
     }
 
-    // The name of the input field (i.e. "file") is used to retrieve the uploaded file
-    const {file} = req.files;
-    extension = path.extname(file.name)//devuelve extensión con punto
-    //splitName = file.name.split('.')
-    //extension = splitName[splitName - 1] //extensión sin punto
-    //extension = file.name.split('.').pop() //sin punto en una línea
+    try {
+        
+        // txt, md
+        // const nombre = await uploadFile( req.files, ['txt','md'], 'textos' );
+        const nombre = await upload( req.files, undefined, 'imgs' );
+        res.json({ nombre });
 
-    const fileName = uuidv4()+extension;
-
-    uploadPath = path.join(__dirname,'../uploads', fileName);
-
-    // Use the mv() method to place the file somewhere on your server
-    file.mv(uploadPath, function(err) {
-        if (err)
-        return res.status(500).json({err});
-
-        res.json({msg:`File uploaded with extension ${extension} to ${uploadPath}`});
-    });
+    } catch (msg) {
+        res.status(400).json({ msg });
+    }
+    
 }
 
-module.exports = {uploadFile}
+const updateImage = async(req = request, res = response) => {
+     //comprobar que se ha subido un archivo
+     if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send('No files were uploaded.');
+        return;
+    }
+
+    try {
+        const collection = req.params.collection;
+        const id = req.params.id
+        const img = await upload( req.files, undefined, collection);
+
+        let updatedEl;
+        switch(collection) {
+            case("bares"):
+                updatedEl = await Bar.findByIdAndUpdate(id, {img: `${img}`});
+                break;
+            case("users"):
+                updatedEl = await User.findByIdAndUpdate(id, {img: img});
+                break;
+            case("cervezas"):
+                updatedEl = await Cerveza.findByIdAndUpdate(id, img);
+                break;
+        }
+        res.json({updatedEl});
+
+    } catch (msg) {
+        res.status(400).json({ msg });
+    }
+}
+
+module.exports = {uploadFile, updateImage}
