@@ -22,6 +22,9 @@ const CervezaSchema = new Schema({
         type: String,
         required: true
     },
+    img: {
+        type: String
+    }
 });
 
 const Cerveza = mongoose.model('Cerveza', CervezaSchema);

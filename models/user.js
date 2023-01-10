@@ -32,6 +32,9 @@ const UserSchema = new Schema({
     Status: {
         type: Boolean, 
         default: true
+    },
+    img: {
+        type: String
     }
 });
 

@@ -1,5 +1,6 @@
 const {request, response} = require('express')
 const { upload } = require('../helpers/uploadFile');
+const fs = require('fs');
 const Bar = require('../models/bar');
 const User = require('../models/user');
 const Cerveza = require('../models/cerveza');
@@ -40,19 +41,40 @@ const updateImage = async(req = request, res = response) => {
         let updatedEl;
         switch(collection) {
             case("bares"):
-                updatedEl = await Bar.findByIdAndUpdate(id, {img: `${img}`});
+                const bar = await Bar.findById(id);
+                checkFile(collection, bar);
+                bar.img = img;
+                updatedEl = bar;
+                // updatedEl = await Bar.findByIdAndUpdate(id, {img});
                 break;
             case("users"):
-                updatedEl = await User.findByIdAndUpdate(id, {img: img});
+                const user = await User.findById(id);
+                checkFile(collection, user);
+                user.img = img;
+                await user.save();
+                updatedEl = user;
+                
+                // updatedEl = await User.findByIdAndUpdate(id, {img});//funciona esta sintaxis
                 break;
             case("cervezas"):
-                updatedEl = await Cerveza.findByIdAndUpdate(id, img);
+                const cerveza = await Cerveza.findById(id);
+                checkFile(collection, cerveza);
+                cerveza.img = img;
+                updatedEl = cerveza;
+                // updatedEl = await Cerveza.findByIdAndUpdate({_id: id}, {img: String(img)});//funciona esta sintaxis
                 break;
         }
         res.json({updatedEl});
 
     } catch (msg) {
         res.status(400).json({ msg });
+    }
+}
+
+//comprobar si existe un archivo con el nombre del img en bar
+const checkFile = (collection, model)=>{
+    if(fs.existsSync(__dirname, '../uploads/', collection, '/', model.img)){
+        fs.unlinkSync(__dirname, '../uploads/', collection, '/', model.img);
     }
 }
 

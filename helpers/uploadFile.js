@@ -37,7 +37,7 @@ const upload = ( files, validExtensions = ['png','jpg','jpeg','gif'], folder = '
                 reject(err);
             }
 
-            resolve( tempName );
+            resolve( tempName ); 
         });
 
         // //recoger el archivo con su extension

@@ -5,7 +5,8 @@
     "Email": "gmalin0@wix.com",
     "Contraseña": "TwxTw70ErivM",
     "Rol": "ADMIN_ROLE",
-    "Status": true
+    "Status": true,
+    "img": ""
   }, 
   {
     "Nombre": "Shane",
@@ -14,7 +15,8 @@
     "Email": "schadwin1@nba.com",
     "Contraseña": "e8ia4ez",
     "Rol": "ADMIN_ROLE",
-    "Status": true
+    "Status": true,
+    "img": ""
   }, 
   {
     "Nombre": "Donella",
@@ -23,7 +25,8 @@
     "Email": "dbenzies2@bing.com",
     "Contraseña": "m5IJC5ybymX",
     "Rol": "ADMIN_ROLE",
-    "Status": true
+    "Status": true,
+    "img": ""
   }, 
   {
     "Nombre": "Mickie",
@@ -32,7 +35,8 @@
     "Email": "mmacdaid3@spiegel.de",
     "Contraseña": "zYZbQm00OOS",
     "Rol": "USER_ROLE",
-    "Status": false
+    "Status": false,
+    "img": ""
   }, 
   {
     "Nombre": "Kean",
@@ -41,7 +45,8 @@
     "Email": "kdutteridge4@bloglines.com",
     "Contraseña": "X999Y179JsC",
     "Rol": "USER_ROLE",
-    "Status": false
+    "Status": false,
+    "img": ""
   }, 
   {
     "Nombre": "Huntlee",
@@ -50,7 +55,8 @@
     "Email": "hzink5@furl.net",
     "Contraseña": "ZujRE8LXf",
     "Rol": "USER_ROLE",
-    "Status": false
+    "Status": false,
+    "img": ""
   }
 ]
   
