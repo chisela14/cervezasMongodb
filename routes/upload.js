@@ -12,7 +12,7 @@ router.post("/", uploadFile)
 //     validateFields
 // ], uploadFile)
 router.put('/:collection/:id',[
-    check("collection").isIn(["bares", "cervezas", "users", "rols", "tapas"]),
+    check("collection").isIn(["bares", "cervezas", "users"]),
     check("id").isMongoId(),
     validateFields
 ], updateImage)

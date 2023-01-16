@@ -1,5 +1,6 @@
 const {request, response} = require('express')
 const { upload } = require('../helpers/uploadFile');
+const path = require('path');
 const fs = require('fs');
 const Bar = require('../models/bar');
 const User = require('../models/user');
@@ -34,48 +35,36 @@ const updateImage = async(req = request, res = response) => {
     }
 
     try {
-        const collection = req.params.collection;
-        const id = req.params.id
-        const img = await upload( req.files, undefined, collection);
-
-        let updatedEl;
+        const {collection, id} = req.params;
+        let model;
         switch(collection) {
-            case("bares"):
-                const bar = await Bar.findById(id);
-                checkFile(collection, bar);
-                bar.img = img;
-                updatedEl = bar;
-                // updatedEl = await Bar.findByIdAndUpdate(id, {img});
+            case "bares":
+                model = await Bar.findById(id);
                 break;
-            case("users"):
-                const user = await User.findById(id);
-                checkFile(collection, user);
-                user.img = img;
-                await user.save();
-                updatedEl = user;
-                
-                // updatedEl = await User.findByIdAndUpdate(id, {img});//funciona esta sintaxis
+            case "users":
+                model = await User.findById(id);
+                // updatedEl = await User.findByIdAndUpdate(id, {img});
                 break;
-            case("cervezas"):
-                const cerveza = await Cerveza.findById(id);
-                checkFile(collection, cerveza);
-                cerveza.img = img;
-                updatedEl = cerveza;
-                // updatedEl = await Cerveza.findByIdAndUpdate({_id: id}, {img: String(img)});//funciona esta sintaxis
+            case "cervezas":
+                model = await Cerveza.findById(id);
                 break;
         }
-        res.json({updatedEl});
+        //comprobar si existe un archivo en el modelo
+        if(model.img != ""){
+            const oldPath = path.join(__dirname, '../uploads/', collection, '/', model.img);
+            if(fs.existsSync(oldPath)){
+                fs.unlinkSync(oldPath);
+            }
+        }
+        const img = await upload( req.files, undefined, collection);
+        model.img = img;
+        await model.save();
+        res.status(200).json({model});
 
     } catch (msg) {
         res.status(400).json({ msg });
     }
 }
 
-//comprobar si existe un archivo con el nombre del img en bar
-const checkFile = (collection, model)=>{
-    if(fs.existsSync(__dirname, '../uploads/', collection, '/', model.img)){
-        fs.unlinkSync(__dirname, '../uploads/', collection, '/', model.img);
-    }
-}
 
 module.exports = {uploadFile, updateImage}
