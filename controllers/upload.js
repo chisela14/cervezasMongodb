@@ -66,5 +66,38 @@ const updateImage = async(req = request, res = response) => {
     }
 }
 
+const getImage = async(req = request, res = response) => {
 
-module.exports = {uploadFile, updateImage}
+   try {
+       const {collection, id} = req.params;
+       let model;
+       switch(collection) {
+           case "bares":
+               model = await Bar.findById(id);
+               break;
+           case "users":
+               model = await User.findById(id);
+               // updatedEl = await User.findByIdAndUpdate(id, {img});
+               break;
+           case "cervezas":
+               model = await Cerveza.findById(id);
+               break;
+       }
+       //comprobar si existe un archivo en el modelo
+       if(model.img != ""){
+           const imgPath = path.join(__dirname, '../uploads/', collection, '/', model.img);
+           if(fs.existsSync(imgPath)){
+               return res.sendFile(imgPath)
+           }
+       }
+       const notFound = path.join(__dirname, '../assets/error404.jpg');
+       res.status(200).sendFile(notFound);
+      
+
+   } catch (msg) {
+       res.status(400).json({ msg });
+   }
+}
+
+
+module.exports = {uploadFile, updateImage, getImage}

@@ -2,23 +2,23 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const CervezaSchema = new Schema({
-    Nombre: {
+    name: {
         type: String,
         required: [true, 'El nombre es obligatorio'],
         unique: true
     },
-    Descripción: {
+    description: {
         type: String,
         required: [true, 'La descripción es obligatoria'],
     },
-    Graduación: {
+    degree: {
         type: String,
         required: [true, 'La graduación es obligatoria'],
     },
-    Envase: {
+    packaging: {
         type: String,
     },
-    Precio: {
+    price: {
         type: String,
         required: true
     },

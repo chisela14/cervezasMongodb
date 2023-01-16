@@ -3,25 +3,25 @@ const User = require('../models/user');
 const bcryptjs = require('bcryptjs');
 
 async function checkLogin(req = request, res = response) {
-    const { Email, Contraseña} = req.body;
+    const { email, password} = req.body;
     try{
 
         //verificar que el email existe
-        const user = await User.findOne({Email})
+        const user = await User.findOne({email})
         if(!user){
             return res.status(401).json({
                 msg: 'User/password incorrect - email'
             })
         }
         //verificar que el usuario está activo
-        if( !user.Status){
+        if( !user.status){
             return res.status(401).json({
                 msg: 'User/password incorrect - inactive'
             })
         }
     
         //verificar que la constraseña es correcta
-        const validPassword = bcryptjs.compareSync(Contraseña, user.Contraseña) 
+        const validPassword = bcryptjs.compareSync(password, user.password) 
         if(!validPassword){
             return res.status(401).json({
                 msg: 'User/password incorrect - password'

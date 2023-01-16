@@ -4,8 +4,8 @@ const bcryptjs = require('bcryptjs');
 const { validationResult } = require('express-validator');
 
 async function getUsers(req = request, res = response) {
-    const {Nombre, Apellidos, Username, Email, Contraseña, Rol, limit=5, skip=0} = req.query
-    const query = {Nombre, Apellidos, Username, Email, Contraseña, Rol, limit, skip}
+    const {name, surname, username, email, password, role, limit=5, skip=0} = req.query
+    const query = {name, surname, username, email, password, role, limit, skip}
     for (const key in query) {
         if (query[key] === undefined) {
           delete query[key];
@@ -30,11 +30,11 @@ async function addUser(req = request, res = response) {
     // if(!errors.isEmpty()){
     //     return res.status(400).json(errors);
     // }
-    const { Nombre, Apellidos, Username, Email, Contraseña, Rol} = req.body;
-    const user = new User({ Nombre, Apellidos, Username, Email, Contraseña, Rol});
-    //encriptar contraseña
+    const { name, surname, username, email, password, role} = req.body;
+    const user = new User({ name, surname, username, email, password, role});
+    //encriptar password
     const salt = bcryptjs.genSaltSync();
-    user.Contraseña = bcryptjs.hashSync(Contraseña, salt);
+    user.password = bcryptjs.hashSync(password, salt);
     
     await user.save();
     res.json({user});
@@ -51,7 +51,7 @@ async function deleteUser(req = request, res = response) {
 async function modifyUser(req = request, res = response) {
     const {id} = req.params;
     //no se va a permitir que se modifique el email
-    const {_id, Email, Status, ...userBody} = req.body; //... operador splice, permite que con el resto que quede se crea una variable(userBody)
+    const {_id, email, Status, ...userBody} = req.body; //... operador splice, permite que con el resto que quede se crea una variable(userBody)
 
     const salt = bcryptjs.genSaltSync();
     userBody.password = bcryptjs.hashSync( userBody.password, salt );

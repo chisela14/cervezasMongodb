@@ -2,8 +2,8 @@ const { response, request } = require('express');
 const Cerveza = require('../models/cerveza');
 
 async function getBeers(req, res) {
-    const {Nombre, Descripción, Graduación, Envase, Precio} = req.query
-    const query = {Nombre, Descripción, Graduación, Envase, Precio}
+    const {name, description, degree, packaging, price, img} = req.query
+    const query = {name, description, degree, packaging, price, img}
     for (const key in query) {
         if (query[key] === undefined) {
           delete query[key];
@@ -24,8 +24,8 @@ async function getBeer(req = request, res = response) {
 }
 
 async function addBeer(req = request, res = response) {
-    const { Nombre, Descripción, Graduación, Envase, Precio } = req.body;
-    const beer = new Cerveza({ Nombre, Descripción, Graduación, Envase, Precio });
+    const { name, description, degree, packaging, price, img } = req.body;
+    const beer = new Cerveza({ name, description, degree, packaging, price, img });
     await beer.save();
     res.json({beer});
 }

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const{check} = require('express-validator');
-const { uploadFile, updateImage } = require('../controllers/upload')
+const { uploadFile, updateImage, getImage } = require('../controllers/upload')
 const { validateFields } = require("../helpers/validate-fields");
 const { hasExtension } = require('../helpers/uploadFile');
 const {isValidCollection} = require('../helpers/db-validator');
@@ -16,5 +16,10 @@ router.put('/:collection/:id',[
     check("id").isMongoId(),
     validateFields
 ], updateImage)
+router.get('/:collection/:id',[
+    check("collection").isIn(["bares", "cervezas", "users"]),
+    check("id").isMongoId(),
+    validateFields
+], getImage)
 
 module.exports = router
